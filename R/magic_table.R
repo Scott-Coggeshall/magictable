@@ -1,10 +1,8 @@
-#' Survey Tables
+#' Magic Table
 #'
-#' \code{survey_table} takes a dataset containing responses to WH
-#' survey questions at different timepoints and constructs raw tables
-#' of summary statistics.
+#' \code{magic_table} creates a magic table object from a data.frame-type object.
 #'
-#' @param dataset a data.frame object.
+#' @param dataset a data.frame object, or object that can be coerced to a data.frame.
 #' @param vars a vector of character strings containing the names of the variables
 #' for which summary statistics should be computed.
 #' @param stat_func a function for calculating the summary statistics for the variables specified in \code{vars}.
@@ -17,11 +15,12 @@
 #' @export
 #'
 #' @return a list containing tables of summary statistics for the specified variables.
-survey_table <- function(dataset, vars, stat_func, condvar_wide = NULL, condvar_long = NULL,...){
+magic_table <- function(dataset, vars, var_labels, stat_func, stat_labels, condvar_wide = NULL, condvar_wide_labels = NULL,
+                        condvar_long = NULL, condvar_long_labels = NULL, ...){
 
   if(is.null(condvar_wide) & is.null(condvar_long)){
 
-   as.data.frame(t(sapply(dataset[, vars], stat_func, ...)))
+   output <- as.data.frame(t(sapply(dataset[, vars], stat_func, ...)))
 
   } else if(is.null(condvar_long) & !is.null(condvar_wide)){
 
@@ -44,12 +43,12 @@ survey_table <- function(dataset, vars, stat_func, condvar_wide = NULL, condvar_
 
     long_df <- long_df[order(long_df$var_names), ]
 
-    long_df
+    output <- long_df
 
 
   } else {
 
-    lapply(unique(dataset[,condvar_wide]), function(x){
+    output <- lapply(unique(dataset[,condvar_wide]), function(x){
 
       temp_list <- lapply(unique(dataset[dataset[,condvar_wide] == x,condvar_long]), function(y){
 
@@ -73,10 +72,34 @@ survey_table <- function(dataset, vars, stat_func, condvar_wide = NULL, condvar_
 
 
   }
+
+  class(output) <- c("magictable")
+  output$var_labels <- var_labels
+  output$stat_labels <- stat_labels
+  output$condvar_wide_labels <- condvar_wide_labels
+  output$condvar_long_labels <- condvar_long_labels
+
+
+
+  output
 }
 
 
 
+#' \code{magic_table} Object?
+#'
+#' \code{is.magic_table} checks if the input is of class \code{magic_table}.
+#'
+#' @param x an \code{R} object.
+#'
+#' @export
+#'
+#' @return a logical indicting whether \code{x} is of class \code{magic_table}.
+is.magic_table <- function(x){
+
+ inherits(x, "magic_table")
+
+}
 
 
 
