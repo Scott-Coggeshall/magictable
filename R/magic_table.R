@@ -15,12 +15,13 @@
 #' @export
 #'
 #' @return a list containing tables of summary statistics for the specified variables.
-magic_table <- function(dataset, vars, var_labels, stat_func, stat_labels, condvar_wide = NULL, condvar_wide_labels = NULL,
+magic_table <- function(dataset, vars, var_labels = NULL, stat_func, stat_labels, condvar_wide = NULL, condvar_wide_labels = NULL,
                         condvar_long = NULL, condvar_long_labels = NULL, ...){
+  output <- list()
 
   if(is.null(condvar_wide) & is.null(condvar_long)){
 
-   output <- as.data.frame(t(sapply(dataset[, vars], stat_func, ...)))
+   output$table <- as.data.frame(t(sapply(dataset[, vars], stat_func, ...)))
 
   } else if(is.null(condvar_long) & !is.null(condvar_wide)){
 
@@ -43,12 +44,12 @@ magic_table <- function(dataset, vars, var_labels, stat_func, stat_labels, condv
 
     long_df <- long_df[order(long_df$var_names), ]
 
-    output <- long_df
+    output$table <- long_df
 
 
   } else {
 
-    output <- lapply(unique(dataset[,condvar_wide]), function(x){
+    output$table <- lapply(unique(dataset[,condvar_wide]), function(x){
 
       temp_list <- lapply(unique(dataset[dataset[,condvar_wide] == x,condvar_long]), function(y){
 
@@ -74,10 +75,31 @@ magic_table <- function(dataset, vars, var_labels, stat_func, stat_labels, condv
   }
 
   class(output) <- c("magictable")
+
+  if(is.null(var_labels)) var_labels <- vars
+  if(is.null(condvar_long_labels)) <- condvar_long
+  if(is.null(condvar_wide_labels)) <- condvar_wide
+  if(is.null(stat_labels)){
+
+    if(is.null(condvar_wide)){
+
+      n_stats <- ncol(output$table[[1]])
+
+    } else{
+
+      n_stats <- ncol(output$table)
+
+    }
+
+    stat_labels <- paste0("x", 1:n_stats)
+
+  }
+
   output$var_labels <- var_labels
   output$stat_labels <- stat_labels
   output$condvar_wide_labels <- condvar_wide_labels
   output$condvar_long_labels <- condvar_long_labels
+  output$stat_labels <- stat_labels
 
 
 
