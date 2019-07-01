@@ -25,7 +25,7 @@ magic_table <- function(dataset, vars, var_labels = NULL, stat_func, stat_labels
 
   } else if(is.null(condvar_long) & !is.null(condvar_wide)){
 
-    lapply(unique(dataset[,condvar_wide]), function(x) as.data.frame(t(sapply(dataset[dataset[,condvar_wide] == x, vars], stat_func, ...))))
+    output$table <- lapply(unique(dataset[,condvar_wide]), function(x) as.data.frame(t(sapply(dataset[dataset[,condvar_wide] == x, vars], stat_func, ...))))
 
   } else if(!is.null(condvar_long) & is.null(condvar_wide)){
 
@@ -77,8 +77,8 @@ magic_table <- function(dataset, vars, var_labels = NULL, stat_func, stat_labels
   class(output) <- c("magictable")
 
   if(is.null(var_labels)) var_labels <- vars
-  if(is.null(condvar_long_labels)) <- condvar_long
-  if(is.null(condvar_wide_labels)) <- condvar_wide
+  if(is.null(condvar_long_labels) & !is.null(condvar_long)) condvar_long_labels <- unique(dataset[,condvar_long])
+  if(is.null(condvar_wide_labels) & !is.null(condvar_wide)) condvar_wide_labels <- unique(dataset[,condvar_wide])
   if(is.null(stat_labels)){
 
     if(is.null(condvar_wide)){
