@@ -119,7 +119,7 @@ magic_table <- function(dataset, vars, var_labels = NULL, stat_func, stat_labels
 #' @return a logical indicting whether \code{x} is of class \code{magic_table}.
 is.magic_table <- function(x){
 
- inherits(x, "magic_table")
+ inherits(x, "magictable")
 
 }
 

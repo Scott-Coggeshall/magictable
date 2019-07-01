@@ -2,7 +2,6 @@
 #'
 #' @param data an object of class \code{magic_table}.
 #' @param ... additional arguments to be passed to the function \code{flextable}.
-#' @importFrom flextable flextable
 #'
 #' @export
 #'
@@ -95,6 +94,19 @@ flextable.magic_table <- function(data){
 
 }
 
+#' @importFrom flextable flextable
 setGeneric(name = "flextable")
 setOldClass("magictable")
+
+#' @export flextable
+flextable <- flextable
+
+#' @export
 setMethod("flextable", "magictable", flextable.magic_table)
+
+
+
+
+
+
+
