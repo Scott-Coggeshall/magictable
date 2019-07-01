@@ -11,6 +11,9 @@ flextable.magic_table(data)
 
 \item{...}{additional arguments to be passed to the function \code{flextable}.}
 }
+\value{
+a \code{flextable} object constructed from a \code{magictable} object.
+}
 \description{
 Magic Table Generic for Flextable
 }

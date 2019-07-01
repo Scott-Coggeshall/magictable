@@ -3,8 +3,10 @@
 #' @param data an object of class \code{magic_table}.
 #' @param ... additional arguments to be passed to the function \code{flextable}.
 #' @importFrom flextable flextable
-#' @exportMethod
 #'
+#' @export
+#'
+#' @return a \code{flextable} object constructed from a \code{magictable} object.
 flextable.magic_table <- function(data){
   mt <- data
   var_labels <- mt$var_labels

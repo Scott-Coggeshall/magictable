@@ -2,8 +2,8 @@
 
 export(compute_stats)
 export(compute_stats_meansdcombined)
+export(flextable.magic_table)
 export(is.magic_table)
 export(magic_table)
 export(make_table)
-exportMethods("")
 importFrom(flextable,flextable)
