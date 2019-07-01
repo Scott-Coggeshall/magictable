@@ -96,4 +96,5 @@ flextable.magic_table <- function(data){
 }
 
 setGeneric(name = "flextable")
+setOldClass("magictable")
 setMethod("flextable", "magictable", flextable.magic_table)
