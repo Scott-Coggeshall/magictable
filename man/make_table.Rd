@@ -4,23 +4,23 @@
 \alias{make_table}
 \title{Word-Style Tables}
 \usage{
-make_table(tables, condvar_wide_labels = NULL, condvar_long_labels = NULL,
-  stat_labels, var_labels)
+make_table(tables, var_labels, stat_labels, condvar_wide_labels = NULL,
+  condvar_long_labels = NULL)
 }
 \arguments{
 \item{tables}{a list of tables of summary statistics. Should be the
 output from a call to \code{survey_table}.}
+
+\item{var_labels}{a vector of character strings containing the labels for the variables.}
+
+\item{stat_labels}{a vector of character strings containing the labels for the
+summary statistics, e.g. "Mean", "SD".}
 
 \item{condvar_wide_labels}{a vector of character strings containing the
 labels for the "wide" conditioning variable, e.g. "Baseline", "6 Months", "6 Month-Baseline Difference".}
 
 \item{condvar_long_labels}{a vector of character strings containing the labels
 for the "long" conditioning variable, e.g. "No Treatment", "Treatment".}
-
-\item{stat_labels}{a vector of character strings containing the labels for the
-summary statistics, e.g. "Mean", "SD".}
-
-\item{var_labels}{a vector of character strings containing the labels for the variables.}
 }
 \value{
 a flextable object.
