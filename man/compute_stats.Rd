@@ -2,21 +2,26 @@
 % Please edit documentation in R/compute_quant.R
 \name{compute_stats}
 \alias{compute_stats}
-\title{Compute Means, SDs, and Sample Sizes}
+\title{General Quantitative Function}
 \usage{
-compute_stats(x, labels = NULL)
+compute_stats(x, stat_func, stat_args, labels = NULL)
 }
 \arguments{
-\item{x}{a numeric vector.}
+\item{x}{a numeric vector}
 
-\item{labels}{a vector of character strings containing the labels for
-the statistics computed on \code{x}.}
-}
-\value{
-a numeric vector containing the computed statistics.
+\item{labels}{a vector of character strings giving the labels for the elements
+of the output. Default is to use \code{func_names}.}
+
+\item{func_names}{a vector of character strings giving the names of the
+functions to be applied to \code{x}.}
+
+\item{func_args}{a list with number of elements equal to \code{length(func_names)}.
+Each element of \code{func_args} should itself be a named list of arguments to be
+passed to the corresponding element of \code{func_names}. If the list consists of
+non-list elements, then it is assumed that this single list contains arguments
+that should be applied to all functions contained in \code{func_names}.}
 }
 \description{
-\code{compute_stats} is a function for computing the mean, SD, and N
-for a numeric variable. Designed to be passed as the \code{quant_func}
-argument to \code{survey_table}.
+\code{compute_quant} provides the most general and flexible way of
+specifying the \code{quant_func} argument to \code{survey_table}.
 }
