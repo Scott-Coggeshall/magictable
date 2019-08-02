@@ -62,8 +62,8 @@ compute_cat <- function(x, prop = F, na.rm = T, digits = 3){
 compute_meansd <- function(x, combine = T, digits = 2){
 
 
- mean_val <- round(mean(x, na.rm = T, ...), digits = digits)
- sd_val <- round(sd(x, na.rm = T, ...), digits = digits)
+ mean_val <- round(mean(x, na.rm = T), digits = digits)
+ sd_val <- round(sd(x, na.rm = T), digits = digits)
  if(combine == T){
 
    meansd_combined <- paste0(mean_val, " (", sd_val, ")")
