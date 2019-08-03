@@ -24,7 +24,7 @@ compute_quant <- function(x, digits = 3, labels = NULL, ...){
   } else{
 
 
-    output <- sapply(seq_along(digits), function(x) round(stats[x], digits = digits[x]))
+    output <- sapply(seq_along(digits), function(x) as.character(round(stats[x], digits = digits[x])))
 
   }
 
