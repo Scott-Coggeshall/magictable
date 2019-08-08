@@ -100,7 +100,7 @@ magic_table_numeric <- function(dataset, vars, var_labels = NULL, stat_func, sta
   output$stat_labels <- stat_labels
   output$condvar_wide_labels <- condvar_wide_labels
   output$condvar_long_labels <- condvar_long_labels
-  output$stat_labels <- stat_labels
+  output$type <- "numeric"
 
 
 
@@ -126,9 +126,21 @@ magic_table_numeric <- function(dataset, vars, var_labels = NULL, stat_func, sta
 #' @export
 #'
 #' @return a list containing tables of summary statistics for the specified variables.
-magic_table_categorical <- function(dataset, vars, var_labels = NULL, stat_func, stat_labels, condvar_wide = NULL, condvar_wide_labels = NULL,
+magic_table_categorical <- function(dataset, vars, var_labels = NULL, cat_labels = NULL, stat_func, stat_labels, condvar_wide = NULL, condvar_wide_labels = NULL,
                                 condvar_long = NULL, condvar_long_labels = NULL, ...){
   output <- list()
+
+  # create dataset with factor variables expanded into indicator variables
+
+  dataset_expanded <- construct_indicators(vars, dataset)
+
+
+  if(is.null(cat_labels)) cat_labels <- unlist(lapply(dataset[, vars], levels))
+
+  var_labels <- rep(var_labels, sapply(dataset[, vars], function(x) length(levels(x))))
+  vars <- names(dataset_expanded)
+
+  dataset <- cbind(dataset, dataset_expanded)
 
   if(is.null(condvar_wide) & is.null(condvar_long)){
 
@@ -207,10 +219,11 @@ magic_table_categorical <- function(dataset, vars, var_labels = NULL, stat_func,
   }
 
   output$var_labels <- var_labels
+  output$cat_labels <- cat_labels
   output$stat_labels <- stat_labels
   output$condvar_wide_labels <- condvar_wide_labels
   output$condvar_long_labels <- condvar_long_labels
-  output$stat_labels <- stat_labels
+  output$type <- "categorical"
 
 
 
