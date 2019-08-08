@@ -33,18 +33,68 @@ compute_quant <- function(x, digits = 3, labels = NULL, ...){
 
 }
 
+#' Expand Factor Variable into Indicators
+#'
+#' \code{construct_indicators} takes a factor variable with k levels contained in a data.frame and
+#' expands it into a k-column data.frame of indicator variables for each of the levels.
+#' Primarily a helper function for \code{magic_table_categorical}.
+#'
+#' @param var_name a character string or vector containing the name(s) of the factor variable(s).
+#' @param dataset a data.frame object containing \code{var_name}.
+#'
+#' @export
+#'
+#' @return a data.frame containing the expanded factor variable.
+construct_indicators <- function(var_name, dataset){
 
+  if(length(var_name) == 1){
+    df <- as.data.frame(sapply(levels(dataset[, var_name]), function(x) dataset[, var_name] == x ))
+
+    names(df) <- paste(var_name, levels(dataset[, var_name]), sep = '_')
+  } else{
+
+   # var_name is a vector of variable names, use lapply and recursion
+   # to construct individual expanded data.frames and then cbind result
+   df_list <- lapply(var_name, construct_indicators, dataset = dataset)
+
+   df <- Reduce(cbind, df_list)
+
+
+  }
+  df
+
+
+}
+
+
+#' Count or Proportion
+#'
+#' \code{compute_cat} takes an indicator variable and returns either the
+#' proportion or count of TRUE values.
+#'
+#' @param x a vector containing entries for the indicator variable (either TRUE/FALSE or 1/0).
+#' @param prop a logical. If TRUE, then a proportion is returned. If FALSE, then a count
+#' is returned.
+#' @param na.rm a logical. If TRUE, then NA values are removed.
+#' @param digits an integer specifying the number of significant digits to report.
+#'
+#' @export
+#'
+#' @return a scalar containing the count or proportion.
 compute_cat <- function(x, prop = F, na.rm = T, digits = 3){
 
   if(prop){
 
-    output <- mean(x, na.rm = na.rm)
+    stat <- mean(x, na.rm = na.rm)
+    output <- c(n = as.character(sum(!is.na(x))), missing = as.character(sum(is.na(x))), prop = as.character(round(stat, digits = digits)))
   } else{
 
-    output <- sum(x, na.rm = na.rm)
+    stat <- sum(x, na.rm = na.rm)
+
+    output <- c(n = as.character(sum(!is.na(x))), missing = as.character(sum(is.na(x))), count = as.character(stat))
   }
 
-  round(output, digits)
+  output
 
 }
 
