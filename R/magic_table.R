@@ -25,6 +25,10 @@
 #' wil automatically choose one based on the classes of \code{vars}.
 #' @param ... additional variables to be passed to \code{stat_func}.
 #'
+#' @details The main purpose of the \code{magic_table} function is to serve as a top-level function
+#' for calling either \code{magic_table_numeric} or \code{magic_table_categorical}. For convenience,
+#' \code{magic_table} will attempt to figure out which one should be called based on the classes
+#' of the variables contained in \code{vars}.
 #' @export
 #'
 #' @return a \code{magic_table} object, the result of a call to either \code{magic_table_numeric}
@@ -32,8 +36,27 @@
 magic_table <- function(dataset, vars, var_labels, cat_labels, stat_func, condvar_wide,
                         condvar_wide_labels, condvar_long, condvar_long_labels, categorical = NULL, ...){
 
+  var_classes <- sapply(dataset[, vars], class)
+  # convert character strings to factors
+  dataset[, vars[var_classes == "character"]] <- lapply(dataset[, vars[var_classes == "character"]], factor)
 
+  var_classes <- sapply(dataset[, vars], class)
+  # check if there are a mix of factor and non-factor variables
+  if(any(var_classes != "factor")) stop("Error: 'vars' contains a mix of categorical and non-categorical variables.")
 
+  if(is.null(categorical)) categorical <- any(var_classes == "factor")
+
+  if(categorical){
+
+    magic_table_categorical(dataset, vars, var_labels, cat_labels, stat_func, condvar_wide,
+                            condvar_wide_labels, condvar_long, condvar_long_labels, ...)
+
+  } else{
+
+   magic_table_numeric(dataset, vars, var_labels, stat_func, stat_labels, condvar_wide, condvar_wide_labels,
+                       condvar_long, condvar_long_labels, ...)
+
+  }
 
 
 
