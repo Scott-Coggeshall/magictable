@@ -42,7 +42,7 @@ magic_table <- function(dataset, vars, var_labels, cat_labels, stat_func, condva
 
   var_classes <- sapply(dataset[, vars], class)
   # check if there are a mix of factor and non-factor variables
-  if(any(var_classes != "factor")) stop("Error: 'vars' contains a mix of categorical and non-categorical variables.")
+  if(any(var_classes != "factor") & any(var_classes == "factor")) stop("Error: 'vars' contains a mix of categorical and non-categorical variables.")
 
   if(is.null(categorical)) categorical <- any(var_classes == "factor")
 
