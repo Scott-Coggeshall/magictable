@@ -1,17 +1,69 @@
 #' Magic Table
 #'
+#' \code{magic_table} is the top-level function for \code{magic_table_numeric} and
+#' \code{magic_table_categorical}.
+#'
+#' @param dataset a data.frame object, or object that can be coerced to a data.frame.
+#' @param vars a vector of character strings containing the names of the variables
+#' for which summary statistics should be computed.
+#' @param var_labels a vector of character strings containing the labels for the variables
+#' in \code{vars}.
+#' @param cat_labels a vector of character strings containing the labels for the categories
+#' of the variables contained in \code{vars}. If NULL (default), then \code{cat_labels} is
+#' constructed from the \code{levels} of \code{vars}.
+#' @param stat_func a function for calculating the summary statistics for the variables specified in \code{vars}.
+#' @param condvar_wide a character string indicating a variable in \code{dataset} for wide conditioning,
+#' i.e. within-group statistics are added as extra columns.
+#' @param condvar_wide_labels a character vector containing the labels for the different values
+#' of \code{condvar_wide}.
+#' @param condvar_long a character string indicating a variable in \code{dataset} for long conditioning,
+#' i.e. within-group statistics are added as extra rows.
+#' @param condvar_long_labels a character vector containing the labels for the different values
+#' of \code{condvar_long}.
+#' @param categorical a logical value indicating whether \code{magic_table_categorical} or
+#' \code{magic_table_numeric} should be called. If \code{NULL} (default), then \code{magic_table}
+#' wil automatically choose one based on the classes of \code{vars}.
+#' @param ... additional variables to be passed to \code{stat_func}.
+#'
+#' @export
+#'
+#' @return a \code{magic_table} object, the result of a call to either \code{magic_table_numeric}
+#' or \code{magic_table_categorical}.
+magic_table <- function(dataset, vars, var_labels, cat_labels, stat_func, condvar_wide,
+                        condvar_wide_labels, condvar_long, condvar_long_labels, categorical = NULL, ...){
+
+
+
+
+
+
+
+}
+#' Magic Table
+#'
 #' \code{magic_table_numeric} creates a magic table object from a data.frame-type object when
 #' the input variables are a set of numeric variables.
 #'
 #' @param dataset a data.frame object, or object that can be coerced to a data.frame.
 #' @param vars a vector of character strings containing the names of the variables
 #' for which summary statistics should be computed.
+#' @param var_labels a vector of character strings containing the labels for the variables
+#' contained in \code{vars}.
 #' @param stat_func a function for calculating the summary statistics for the variables specified in \code{vars}.
 #' @param condvar_wide a character string indicating a variable in \code{dataset} for wide conditioning,
 #' i.e. within-group statistics are added as extra columns.
+#' @param condvar_wide_labels a character vector containing the labels for the different values
+#' of \code{condvar_wide}.
 #' @param condvar_long a character string indicating a variable in \code{dataset} for long conditioning,
 #' i.e. within-group statistics are added as extra rows.
+#' @param condvar_long_labels a character vector containing the labels for the different values
+#' of \code{condvar_long}.
+#' @param categorical a logical value indicating whether \code{magic_table_numeric} or
+#' \code{magic_table_categorical} should be called. If \code{NULL} (default), then
+#' \code{magic_table} will select one based on the class of the variables contained in \code{vars}.
 #' @param ... additional variables to be passed to \code{stat_func}.
+#'
+#'
 #'
 #' @export
 #'
@@ -116,12 +168,20 @@ magic_table_numeric <- function(dataset, vars, var_labels = NULL, stat_func, sta
 #' @param dataset a data.frame object, or object that can be coerced to a data.frame.
 #' @param vars a vector of character strings containing the names of the variables
 #' for which summary statistics should be computed.
+#' @param var_labels a vector of character strings containing the labels for the variables
+#' in \code{vars}.
+#' @param cat_labels a vector of character strings containing the labels for the categories
+#' of the variables contained in \code{vars}. If NULL (default), then \code{cat_labels} is
+#' constructed from the \code{levels} of \code{vars}.
 #' @param stat_func a function for calculating the summary statistics for the variables specified in \code{vars}.
 #' @param condvar_wide a character string indicating a variable in \code{dataset} for wide conditioning,
 #' i.e. within-group statistics are added as extra columns.
+#' @param condvar_wide_labels a character vector containing the labels for the different values
+#' of \code{condvar_wide}.
 #' @param condvar_long a character string indicating a variable in \code{dataset} for long conditioning,
 #' i.e. within-group statistics are added as extra rows.
-#' @param ... additional variables to be passed to \code{stat_func}.
+#' @param condvar_long_labels a character vector containing the labels for the different values
+#' of \code{condvar_long}.
 #'
 #' @export
 #'
