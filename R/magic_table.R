@@ -35,7 +35,7 @@
 #'
 #' @return a \code{magic_table} object, the result of a call to either \code{magic_table_numeric}
 #' or \code{magic_table_categorical}.
-magic_table <- function(dataset, vars, var_labels, cat_labels, stat_func, condvar_wide,
+magic_table <- function(dataset, vars, var_labels, cat_labels, stat_func, stat_labels, condvar_wide,
                         condvar_wide_labels, condvar_long, condvar_long_labels, categorical = NULL, ...){
 
   var_classes <- sapply(dataset[, vars], class)
