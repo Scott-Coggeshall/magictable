@@ -40,6 +40,9 @@ of \code{condvar_long}.}
 wil automatically choose one based on the classes of \code{vars}.}
 
 \item{...}{additional variables to be passed to \code{stat_func}.}
+
+\item{stat_labels}{a vector of character strings containing the labels for the values
+in the output from \code{stat_func}.}
 }
 \value{
 a \code{magic_table} object, the result of a call to either \code{magic_table_numeric}
@@ -48,4 +51,10 @@ or \code{magic_table_categorical}.
 \description{
 \code{magic_table} is the top-level function for \code{magic_table_numeric} and
 \code{magic_table_categorical}.
+}
+\details{
+The main purpose of the \code{magic_table} function is to serve as a top-level function
+for calling either \code{magic_table_numeric} or \code{magic_table_categorical}. For convenience,
+\code{magic_table} will attempt to figure out which one should be called based on the classes
+of the variables contained in \code{vars}.
 }

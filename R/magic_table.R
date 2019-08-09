@@ -12,6 +12,8 @@
 #' of the variables contained in \code{vars}. If NULL (default), then \code{cat_labels} is
 #' constructed from the \code{levels} of \code{vars}.
 #' @param stat_func a function for calculating the summary statistics for the variables specified in \code{vars}.
+#' @param stat_labels a vector of character strings containing the labels for the values
+#' in the output from \code{stat_func}.
 #' @param condvar_wide a character string indicating a variable in \code{dataset} for wide conditioning,
 #' i.e. within-group statistics are added as extra columns.
 #' @param condvar_wide_labels a character vector containing the labels for the different values
@@ -42,7 +44,7 @@ magic_table <- function(dataset, vars, var_labels, cat_labels, stat_func, condva
 
   var_classes <- sapply(dataset[, vars], class)
   # check if there are a mix of factor and non-factor variables
-  if(any(var_classes != "factor")) stop("Error: 'vars' contains a mix of categorical and non-categorical variables.")
+  if(any(var_classes != "factor") & any(var_classes == "factor")) stop("Error: 'vars' contains a mix of categorical and non-categorical variables.")
 
   if(is.null(categorical)) categorical <- any(var_classes == "factor")
 
