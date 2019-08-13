@@ -89,11 +89,7 @@ flextable.magic_table <- function(data){
 
   }
 
-  }
-
-
-
-  if(mt$type == "categorical"){
+  } else {
     if(is.null(condvar_wide_labels) & is.null(condvar_long_labels)){
       names(tables) <- stat_labels
       tables$Variable <- var_labels
@@ -169,10 +165,10 @@ flextable.magic_table <- function(data){
 
     }
 
-  }
 
 
 
+}
 
 }
 
